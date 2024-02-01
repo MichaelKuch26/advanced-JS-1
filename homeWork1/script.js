@@ -55,65 +55,55 @@ for (const album of collection) {
 // Клиент Мария заказала: Суши "Калифорния" и Пиццу "Маргарита".
 // Клиент Ирина заказала: Чизкейк.
 
-// a) Map: специализация => повар
-let specialization = new Map();
-
-specialization.set("Пицца", "Виктор");
-specialization.set("Суши", "Ольга");
-specialization.set("Десерты", "Дмитрий");
-
-// b) Map: повар => Set блюдо
-let cook = new Map();
-
-let victor = {name: "Виктор"};
-let victorDish = new Set();
-victorDish.add('Пицца "Маргарита"');
-victorDish.add('Пицца "Пепперони"');
-
-let olga = {name: "Ольга"};
-let olgaDish = new Set();
-olgaDish.add('Суши "Филадельфия"');
-olgaDish.add('Суши "Калифорния"');
-
-let dmitry = {name: "Дмитрий"};
-let dmitryDish = new Set();
-dmitryDish.add('Тирамису');
-dmitryDish.add('Чизкейк');
-
-cook.set(victor, victorDish);
-cook.set(olga, olgaDish);
-cook.set(dmitry, dmitryDish);
-
-// c) Map: клиент => Set заказ
-
-let order = new Map();
-
-let person1 = {name: "Алексей"};
-let person1Ord = new Set();
-person1Ord.add('Тирамису');
-person1Ord.add('Пицца "Пепперони"');
-
-let person2 = {name: "Мария"};
-let person2Ord = new Set();
-person2Ord.add('Суши "Калифорния"');
-person2Ord.add('Пицца "Маргарита"');
-
-let person3 = {name: "Ирина"};
-let person3Ord = new Set();
-person3Ord.add('Чизкейк');
-
-order.set(person1, person1Ord);
-order.set(person2, person2Ord);
-order.set(person3, person3Ord);
-
-console.log(`Специализация: Пицца -  ${specialization.get("Пицца")}`);
-console.log(`Специализация: Суши -  ${specialization.get("Суши")}`); 
-console.log(`Специализация: Десерты -  ${specialization.get("Десерты")}`);  
-
-console.log(`Блюда повара Виктора: ${[...cook.get(victor)]}`); 
-console.log(`Блюда повара Ольги: ${[...cook.get(olga)]}`);
-console.log(`Блюда повара Дмитрия: ${[...cook.get(dmitry)]}`);
-
-console.log(`Заказ Алексея: ${[...order.get(person1)]}`);
-console.log(`Заказ Марии: ${[...order.get(person2)]}`);
-console.log(`Заказ Ирины: ${[...order.get(person3)]}`);
+const viktor = {
+  name: 'Виктор',
+  specialty: 'пицца'
+  }
+  
+  const olga = {
+  name: 'Ольга',
+  specialty: 'суши'
+  }
+  const dmitry = {
+  name: 'Дмитрий',
+  specialty: 'десерты'
+  }
+  
+  const pizzas = ['Пицца "Маргарита"', 'Пицца "Пепперони"'];
+  const sushi = ['Суши "Филадельфия"', 'Суши "Калифорния"'];
+  const desserts = ['Тирамису', 'Чизкейк'];
+  
+  const cooks = new Map();
+  cooks
+  .set(viktor, pizzas)
+  .set(olga, sushi)
+  .set(dmitry, desserts);
+  
+  const clients = [
+  {name: 'Алексей'},
+  {name: 'Мария'},
+  {name: 'Ирина'}
+  ];
+  
+  const orders = new Map();
+  orders
+  .set(clients[0], [pizzas[1], desserts[0]])
+  .set(clients[1], [sushi[1], pizzas[0]])
+  .set(clients[2], [desserts[1]]);
+  
+  console.log('\nПовара и их специализации:\n');
+  for (const cook of cooks.keys()) {
+  console.log(`${cook.name} - специализация: ${cook.specialty}`)
+  }
+  console.log("\nБлюда и их повара:\n");
+  for (const cook of cooks) {
+  for (const dish of cook[1]) {
+  console.log(`${dish} - повар: ${cook[0].name}`)
+  }
+  }
+  
+  console.log('\nЗаказы:\n');
+  
+  orders.forEach((value, key) => {
+  console.log(`Клиент ${key.name} заказал: ${value}`)
+  })
